@@ -21,5 +21,5 @@ priser = {
         "Gallrare": 125, #Kr per timme
         "Verktygskostnad": 10000, #Verktyg så som röjsåg, motorsåg, skyddskläder
     },
-    "Pris per mil": 30, #Kr per mil
+    "Pris per mil": 300, #Kr per mil
 }

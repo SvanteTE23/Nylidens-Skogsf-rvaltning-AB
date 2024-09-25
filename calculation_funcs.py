@@ -51,5 +51,30 @@ def markberedning_kostnad(hektar, dist, antal_beredare):
     print("Total kostnad för markberedning: " + '{:,.0f}'.format(kostnad).replace(',', ' '))
     print("Uppskattad tid för markberedning: " + str(uppskattad_tid) + " timmar")
     
-def avverkning_kostnad(hektar, dist, antal_arbetare):
-    beräkna_antal_träd = 2000 * hektar #Antal träd per hektar, ca 2000 träd per hektar
+def avverkning_kostnad(hektar, dist, antal_arbetare_skot, antal_arbetare_av):
+    antal_träd = 2000 * hektar #Antal träd per hektar, ca 2000 träd per hektar
+    
+    tid_avverkning = antal_träd / 200 #200 träd per timme med en modern skogsmaskin
+    
+    #Beräkna kostnaden för avverkning beroende på tid och antal arbetare
+    pris_avverkning = tid_avverkning * (p.priser["Avverkning"]["Skogsmaskinförare"] * antal_arbetare_av) + tid_avverkning * p.priser["Avverkning"]["Maskinkostnad_Averkning"]
+    
+    
+    tid_skotning = antal_träd / 100 #100 träd per timme med en skotare
+    
+    #Beräkna kostnaden för skotning beroende på tid och antal arbetare
+    pris_skotning = tid_skotning * (p.priser["Avverkning"]["Skotare"] * antal_arbetare_skot) + tid_skotning * p.priser["Avverkning"]["Maskinkostnad_Skotare"]
+    
+    #Kostnad för att köra till platsen
+    kör_kostnad = p.priser["Pris per mil"] * dist
+    
+    #Slå ihop priserna för avverkning och skotning och körning ohc räkna total tid
+    totalt_pris = pris_avverkning + pris_skotning + kör_kostnad
+    total_tid = tid_avverkning + tid_skotning
+    
+    if total_tid > 100:
+        print("Varning! Det kommer ta mer än 100 timmar att avverka! Fler arbetare skulle behövas!")
+    
+    print("Total kostnad för avverkning: " + '{:,.0f}'.format(totalt_pris).replace(',', ' '))
+    print("Uppskattad tid för avverkning: " + str(total_tid) + " timmar")
+    
