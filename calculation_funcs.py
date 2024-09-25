@@ -77,4 +77,22 @@ def avverkning_kostnad(hektar, dist, antal_arbetare_skot, antal_arbetare_av):
     
     print("Total kostnad för avverkning: " + '{:,.0f}'.format(totalt_pris).replace(',', ' '))
     print("Uppskattad tid för avverkning: " + str(total_tid) + " timmar")
+
+def gallring_kostnad(hektar, dist, arbetare):
+    tid = hektar / (arbetare * 0.125) #En gallrare kan gallra 0.125 hektar per timme
+
+    if tid > 48:
+        print("VARNING!")
+        for i in range(10): #Loop som loopar igenom 10ggr för att hitta det minsta antalet arbetare som behövs så att man tjänar maximalt
+            if hektar / ((arbetare + i) * 0.125) < 48:
+                print(f"Der kommer för låpng tid med {arbetare} arbetare, rekomenderar att anställa {arbetare + i} arbetare")
+                break
     
+    avståndskostnad = p.priser["Pris per mil"] * dist #Kostnad för att köra till platsen
+    
+    #Beräkna kostnaden för gallring beroende på tid och antal arbetare
+    pris = tid * (p.priser["Gallring"]["Gallrare"] * arbetare) + p.priser["Gallring"]["Verktygskostnad"]
+    pris_total = pris + avståndskostnad
+    
+    print("Total kostnad för gallring: " + '{:,.0f}'.format(pris_total).replace(',', ' '))
+    print("Uppskattad tid för gallring: " + str(tid) + " timmar")
