@@ -1,7 +1,5 @@
 import prices as p
 
-def hektar_till_kvadratmeter(hektar):
-    return hektar * 1000
 
 def plantering_kostnad(hektar, antal_plantörer, avstånd):
     pris_planta = p.priser["Plantering"]["Plantpris"] * 1.12 #Kr per planta + semester erstänning
@@ -21,6 +19,8 @@ def plantering_kostnad(hektar, antal_plantörer, avstånd):
     
     return round(total_kostnad)
 
+
+
 def avverknings_planering(hektar, dist):
     uppskattad_tid = hektar * 5 + dist / 80 #5 timmar per hektar + distans i timmar om man kör ca 80km/h
     
@@ -34,9 +34,12 @@ def avverknings_planering(hektar, dist):
     
     return round(kostnad)
 
+
+
 def markberedning_kostnad(hektar, dist, antal_beredare):
     uppskattad_tid = (hektar * 2) / antal_beredare + (dist / 10) /2 #2 timmar per hektar för varje markberedare + avstpånd 30min för varje mil
     
+    #Varna om det tar för lång tid och använd funtionen som räknar ut optimala antalet arbetare
     if uppskattad_tid > 48:
         #Varna företagsägaren att det skulle ta för lång tid med för lite markberedare
         print("Fler markberedare rekomenderas annars tar det för lång tid!")
@@ -50,7 +53,9 @@ def markberedning_kostnad(hektar, dist, antal_beredare):
     #Visa användaren kostnaden och uppskattad tid
     print("Total kostnad för markberedning: " + '{:,.0f}'.format(kostnad).replace(',', ' '))
     print("Uppskattad tid för markberedning: " + str(uppskattad_tid) + " timmar")
-    
+
+
+   
 def avverkning_kostnad(hektar, dist, antal_arbetare_skot, antal_arbetare_av):
     antal_träd = 2000 * hektar #Antal träd per hektar, ca 2000 träd per hektar
     
@@ -72,6 +77,7 @@ def avverkning_kostnad(hektar, dist, antal_arbetare_skot, antal_arbetare_av):
     totalt_pris = pris_avverkning + pris_skotning + kör_kostnad
     total_tid = tid_avverkning + tid_skotning
     
+    #Varna om det tar för lång tid och använd funtionen som räknar ut optimala antalet arbetare
     if total_tid > 100:
         print("Varning! Det kommer ta mer än 100 timmar att avverka! Fler arbetare skulle behövas!")
         print(f"Det optimala antalet arbetare är {optimaltArbetare(hektar, antal_arbetare_av, 100, 0.2)} skongsmaksiner, {optimaltArbetare(hektar, antal_arbetare_skot, 100, 0.1)} skotare")
@@ -79,9 +85,12 @@ def avverkning_kostnad(hektar, dist, antal_arbetare_skot, antal_arbetare_av):
     print("Total kostnad för avverkning: " + '{:,.0f}'.format(totalt_pris).replace(',', ' '))
     print("Uppskattad tid för avverkning: " + str(total_tid) + " timmar")
 
+
+
 def gallring_kostnad(hektar, dist, arbetare):
     tid = hektar / (arbetare * 0.125) #En gallrare kan gallra 0.125 hektar per timme
 
+    #Varna om det tar för lång tid och använd funtionen som räknar ut optimala antalet arbetare
     if tid > 48:
         print("VARNING!")
         print(f"Det optimala antalet arbetare är {optimaltArbetare(hektar, arbetare, 48, 0.125)}")
@@ -95,9 +104,12 @@ def gallring_kostnad(hektar, dist, arbetare):
     
     print("Total kostnad för gallring: " + '{:,.0f}'.format(pris_total).replace(',', ' '))
     print("Uppskattad tid för gallring: " + str(tid) + " timmar")
-    
+
+
+  
+#Funktion som räknar ut det optimala antalet arbetare som behövs för att tjäna maximalt
 def optimaltArbetare(hektar, arbetare, tidM, multiplier):
+    #tidM = maximal tid, multiplier är hur många hektar per timme en arbetare/masking klara av
     for i in range(10): #Loop som loopar igenom 10ggr för att hitta det minsta antalet arbetare som behövs så att man tjänar maximalt
             if hektar / ((arbetare + i) * multiplier) < tidM:
                 return arbetare + i
-                break
