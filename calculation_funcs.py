@@ -40,7 +40,7 @@ def markberedning_kostnad(hektar, dist, antal_beredare):
     if uppskattad_tid > 48:
         #Varna företagsägaren att det skulle ta för lång tid med för lite markberedare
         print("Fler markberedare rekomenderas annars tar det för lång tid!")
-        print(f"Åt mindsonde {antal_beredare + 1} då skulled det ta {uppskattad_tid / (antal_beredare + 1)} timmar")
+        print(f"Det optimala antalet arbetare är {optimaltArbetare(hektar, antal_beredare, 48, 0.5)}")
     
     #Berkäkna kostnaden för markberedning beroende på tid och antal markberedare, samt avstånd till platsen
     kostnad = p.priser["Markberedning"]["Markberedare"] * uppskattad_tid + p.priser["Markberedning"]["Maskinkostnad"] * antal_beredare
@@ -74,6 +74,7 @@ def avverkning_kostnad(hektar, dist, antal_arbetare_skot, antal_arbetare_av):
     
     if total_tid > 100:
         print("Varning! Det kommer ta mer än 100 timmar att avverka! Fler arbetare skulle behövas!")
+        print(f"Det optimala antalet arbetare är {optimaltArbetare(hektar, antal_arbetare_av, 100, 0.2)} skongsmaksiner, {optimaltArbetare(hektar, antal_arbetare_skot, 100, 0.1)} skotare")
     
     print("Total kostnad för avverkning: " + '{:,.0f}'.format(totalt_pris).replace(',', ' '))
     print("Uppskattad tid för avverkning: " + str(total_tid) + " timmar")
@@ -83,10 +84,8 @@ def gallring_kostnad(hektar, dist, arbetare):
 
     if tid > 48:
         print("VARNING!")
-        for i in range(10): #Loop som loopar igenom 10ggr för att hitta det minsta antalet arbetare som behövs så att man tjänar maximalt
-            if hektar / ((arbetare + i) * 0.125) < 48:
-                print(f"Der kommer för låpng tid med {arbetare} arbetare, rekomenderar att anställa {arbetare + i} arbetare")
-                break
+        print(f"Det optimala antalet arbetare är {optimaltArbetare(hektar, arbetare, 48, 0.125)}")
+        
     
     avståndskostnad = p.priser["Pris per mil"] * dist #Kostnad för att köra till platsen
     
@@ -96,3 +95,9 @@ def gallring_kostnad(hektar, dist, arbetare):
     
     print("Total kostnad för gallring: " + '{:,.0f}'.format(pris_total).replace(',', ' '))
     print("Uppskattad tid för gallring: " + str(tid) + " timmar")
+    
+def optimaltArbetare(hektar, arbetare, tidM, multiplier):
+    for i in range(10): #Loop som loopar igenom 10ggr för att hitta det minsta antalet arbetare som behövs så att man tjänar maximalt
+            if hektar / ((arbetare + i) * multiplier) < tidM:
+                return arbetare + i
+                break
