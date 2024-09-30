@@ -36,7 +36,7 @@ def avverknings_planering(hektar, dist):
 
 
 
-def markberedning_kostnad(hektar, dist, antal_beredare):
+def markberedning_kostnad(hektar, antal_beredare, dist):
     uppskattad_tid = (hektar * 2) / antal_beredare + (dist / 10) /2 #2 timmar per hektar för varje markberedare + avstpånd 30min för varje mil
     
     #Varna om det tar för lång tid och använd funtionen som räknar ut optimala antalet arbetare
@@ -56,7 +56,7 @@ def markberedning_kostnad(hektar, dist, antal_beredare):
 
 
    
-def avverkning_kostnad(hektar, dist, antal_arbetare_skot, antal_arbetare_av):
+def avverkning_kostnad(hektar, antal_arbetare_skot, antal_arbetare_av, dist):
     antal_träd = 2000 * hektar #Antal träd per hektar, ca 2000 träd per hektar
     
     tid_avverkning = antal_träd / 200 #200 träd per timme med en modern skogsmaskin
@@ -87,7 +87,7 @@ def avverkning_kostnad(hektar, dist, antal_arbetare_skot, antal_arbetare_av):
 
 
 
-def gallring_kostnad(hektar, dist, arbetare):
+def gallring_kostnad(hektar, arbetare, dist):
     tid = hektar / (arbetare * 0.125) #En gallrare kan gallra 0.125 hektar per timme
 
     #Varna om det tar för lång tid och använd funtionen som räknar ut optimala antalet arbetare
