@@ -26,14 +26,18 @@ menu = ttk.Combobox(root, values=["Plantering", "Avverknings planering", "Markbe
 menu.place(x=10, y=70)
 menu.current(0)
 
+par = ttk.Frame(root)
+par.place(x=0, y=100, width=600, height=300)
+
+submit_button = ttk.Button(par, text="Beräkna", command=lambda: print("Hello")).place(x=160, y=50)
+
 def clear_gui(parent):
     for widget in parent.winfo_children():
         if isinstance(widget, ttk.Label) or isinstance(widget, ttk.Entry):
             widget.place_forget()
 
 def gui_generate(type):
-    par = ttk.Frame(root)
-    par.place(x=0, y=100, width=600, height=300)
+
     
     clear_gui(par)
     
