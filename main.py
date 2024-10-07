@@ -17,7 +17,7 @@ calc.avverkning_kostnad(20, 1, 1, 1)
 calc.gallring_kostnad(20, 1, 2)
     
 
-root = ttk.Window(iconphoto=None, title="Nylidens skogsförvaltning", themename="darkly", size=[800, 400])
+root = ttk.Window(iconphoto=None, title="Nylidens skogsförvaltning AB", themename="darkly", size=[800, 400])
 
 title = ttk.Label(root, text="Beräkning av priser för skogsförvaltning", font=("Helvetica", 14)).place(x=10, y=10)
 
