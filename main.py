@@ -98,44 +98,62 @@ time_calculated = ttk.Label(root, text=" ", font=("Helvetica", 12))
 warn_message = ttk.Label(root, text=" ", foreground="red",font=("Helvetica", 12))
 
 def calculate_from_data():
+    warn_message.place_forget()
+    
     if menu.get() == "Plantering":
-        PList = calc.plantering_kostnad(int(ent1.get()), int(ent2.get()), int(ent4.get()))
-        price_calculated.config(text = PList[0])
-        time_calculated.config(text = PList[1])
-    if menu.get() == "Avverknings planering":
-        APList = calc.avverknings_planering(int(ent1.get()), int(ent4.get()))
-        price_calculated.config(text = APList[0])
-        time_calculated.config(text = APList[1])
+        try:
+            PList = calc.plantering_kostnad(int(ent1.get()), int(ent2.get()), int(ent4.get()))
+            price_calculated.config(text = PList[0])
+            time_calculated.config(text = PList[1])
+            if menu.get() == "Avverknings planering":
+                APList = calc.avverknings_planering(int(ent1.get()), int(ent4.get()))
+                price_calculated.config(text = APList[0])
+                time_calculated.config(text = APList[1])
+        except ValueError:
+            warn_message.config(text = "Ange giltiga värden")
+            warn_message.place(x=240, y=190)
     if menu.get() == "Markberedning":
-        MList = calc.markberedning_kostnad(int(ent1.get()), int(ent2.get()), int(ent4.get()))
-        price_calculated.config(text = MList[0])
-        time_calculated.config(text = MList[1])
-        
-        if MList[2] != 0:
-            warn_message.config(text = MList[2])
+        try:
+            MList = calc.markberedning_kostnad(int(ent1.get()), int(ent2.get()), int(ent4.get()))
+            price_calculated.config(text = MList[0])
+            time_calculated.config(text = MList[1])
+			
+            if MList[2] != 0:
+                warn_message.config(text = MList[2])
+                warn_message.place(x=240, y=190)
+            else:
+                warn_message.place_forget()
+        except ValueError:
+            warn_message.config(text = "Ange giltiga värden")
             warn_message.place(x=240, y=190)
-        else:
-            warn_message.place_forget()
     if menu.get() == "Avverkning":
-        AList = calc.avverkning_kostnad(int(ent1.get()), int(ent2.get()), int(ent3.get()), int(ent4.get()))
-        price_calculated.config(text = AList[0])
-        time_calculated.config(text = AList[1])
+        try:
+            AList = calc.avverkning_kostnad(int(ent1.get()), int(ent2.get()), int(ent3.get()), int(ent4.get()))
+            price_calculated.config(text = AList[0])
+            time_calculated.config(text = AList[1])
         
-        if AList[2] != 0:
-            warn_message.config(text = AList[2])
+            if AList[2] != 0:
+                warn_message.config(text = AList[2])
+                warn_message.place(x=240, y=190)
+            else:
+                warn_message.place_forget()
+        except ValueError:
+            warn_message.config(text = "Ange giltiga värden")
             warn_message.place(x=240, y=190)
-        else:
-            warn_message.place_forget()
     if menu.get() == "Gallring":
-        GList = calc.gallring_kostnad(int(ent1.get()), int(ent2.get()), int(ent4.get()))
-        price_calculated.config(text = GList[0])
-        time_calculated.config(text = GList[1])
+        try:
+            GList = calc.gallring_kostnad(int(ent1.get()), int(ent2.get()), int(ent4.get()))
+            price_calculated.config(text = GList[0])
+            time_calculated.config(text = GList[1])
         
-        if GList[2] != 0:
-            warn_message.config(text = GList[2])
+            if GList[2] != 0:
+                warn_message.config(text = GList[2])
+                warn_message.place(x=240, y=190)
+            else:
+                warn_message.place_forget()
+        except ValueError:
+            warn_message.config(text = "Ange giltiga värden")
             warn_message.place(x=240, y=190)
-        else:
-            warn_message.place_forget()
 
 menu.bind("<<ComboboxSelected>>", display_calc)
 
