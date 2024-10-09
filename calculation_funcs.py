@@ -14,9 +14,6 @@ def plantering_kostnad(hektar, antal_plantörer, avstånd):
     
     total_kostnad = plantbas_kostnad + (pris_planta * antal_plantor) + kostand_bil
     
-    print("Total kostnad för plantering: " + '{:,.0f}'.format(total_kostnad).replace(',', ' '))
-    print("Beräknat antal plantor som går ut: " + str(antal_plantor))
-    
     kostnad = "Total kostnad för plantering: " + '{:,.0f}'.format(total_kostnad).replace(',', ' ') + " kr"
     antal_plant = "Beräknat antal plantor som går ut: " + str(antal_plantor)
     
@@ -32,9 +29,6 @@ def avverknings_planering(hektar, dist):
     
     
     #Visa användaren kostnaden och uppskattad tid
-    print("Total kostnad för avverknings planering: " + '{:,.0f}'.format(kostnad).replace(',', ' '))
-    print("Uppskattad tid för avverknings planering: " + str(uppskattad_tid) + " timmar")
-    
     kostn = "Total kostnad för avverknings planering: " + '{:,.0f}'.format(kostnad).replace(',', ' ') + " kr"
     tid= "Uppskattad tid för avverknings planering: " + str(uppskattad_tid) + " timmar"
     
@@ -50,8 +44,6 @@ def markberedning_kostnad(hektar, antal_beredare, dist):
     #Varna om det tar för lång tid och använd funtionen som räknar ut optimala antalet arbetare
     if uppskattad_tid > 48:
         #Varna företagsägaren att det skulle ta för lång tid med för lite markberedare
-        print("Fler markberedare rekomenderas annars tar det för lång tid!")
-        print(f"Det optimala antalet arbetare är {optimaltArbetare(hektar, antal_beredare, 48, 0.5)}")
         message = f"Det optimala antalet arbetare är {optimaltArbetare(hektar, antal_beredare, 48, 0.5)}"
     
     #Berkäkna kostnaden för markberedning beroende på tid och antal markberedare, samt avstånd till platsen
@@ -60,9 +52,6 @@ def markberedning_kostnad(hektar, antal_beredare, dist):
     kostnad + p.priser["Pris per mil"] * dist
     
     #Visa användaren kostnaden och uppskattad tid
-    print("Total kostnad för markberedning: " + '{:,.0f}'.format(kostnad).replace(',', ' '))
-    print("Uppskattad tid för markberedning: " + str(uppskattad_tid) + " timmar")
-    
     kostnad = "Total kostnad för markberedning: " + '{:,.0f}'.format(kostnad).replace(',', ' ') + " kr"
     tid = "Uppskattad tid för markberedning: " + str(uppskattad_tid) + " timmar"
     
@@ -95,12 +84,7 @@ def avverkning_kostnad(hektar, antal_arbetare_skot, antal_arbetare_av, dist):
     
     #Varna om det tar för lång tid och använd funtionen som räknar ut optimala antalet arbetare
     if total_tid > 100:
-        print("Varning! Det kommer ta mer än 100 timmar att avverka! Fler arbetare skulle behövas!")
-        print(f"Det optimala antalet arbetare är {optimaltArbetare(hektar, antal_arbetare_av, 100, 0.2)} skongsmaksiner, {optimaltArbetare(hektar, antal_arbetare_skot, 100, 0.1)} skotare")
         message = f"Det optimala antalet arbetare är {optimaltArbetare(hektar, antal_arbetare_av, 100, 0.2)} skongsmaksiner, {optimaltArbetare(hektar, antal_arbetare_skot, 100, 0.1)} skotare"
-    
-    print("Total kostnad för avverkning: " + '{:,.0f}'.format(totalt_pris).replace(',', ' '))
-    print("Uppskattad tid för avverkning: " + str(total_tid) + " timmar")
     
     kostnad = "Total kostnad för avverkning: " + '{:,.0f}'.format(totalt_pris).replace(',', ' ') + " kr"
     tid = "Uppskattad tid för avverkning: " + str(total_tid) + " timmar"
@@ -116,8 +100,6 @@ def gallring_kostnad(hektar, arbetare, dist):
     
     #Varna om det tar för lång tid och använd funtionen som räknar ut optimala antalet arbetare
     if tid > 48:
-        print("VARNING!")
-        print(f"Det optimala antalet arbetare är {optimaltArbetare(hektar, arbetare, 48, 0.125)}")
         message = f"Det optimala antalet arbetare är {optimaltArbetare(hektar, arbetare, 48, 0.125)}"
         
     
@@ -127,8 +109,6 @@ def gallring_kostnad(hektar, arbetare, dist):
     pris = tid * (p.priser["Gallring"]["Gallrare"] * arbetare) + p.priser["Gallring"]["Verktygskostnad"]
     pris_total = pris + avståndskostnad
     
-    print("Total kostnad för gallring: " + '{:,.0f}'.format(pris_total).replace(',', ' '))
-    print("Uppskattad tid för gallring: " + str(tid) + " timmar")
     
     kostnad = "Total kostnad för gallring: " + '{:,.0f}'.format(pris_total).replace(',', ' ')
     tid = "Uppskattad tid för gallring: " + str(tid) + " timmar"
